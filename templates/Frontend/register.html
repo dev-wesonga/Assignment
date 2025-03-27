@@ -9,9 +9,24 @@ block content %}
       Register New Account
     </h2>
   </div>
+  <!-- ✅ Flash Messages Section (Auto-Disappear) -->
+  {% with messages = get_flashed_messages(with_categories=True) %} {% if
+  messages %}
+  <div id="flash-messages" class="mt-4">
+    {% for category, message in messages %}
+    <div
+      class="rounded-md p-3 transition-opacity duration-1000 ease-out {% if category == 'success' %} bg-green-100 text-green-800 {% else %} bg-red-100 text-red-800 {% endif %}"
+    >
+      {{ message }}
+    </div>
+    {% endfor %}
+  </div>
+  {% endif %} {% endwith %}
+  <!-- ✅ End Flash Messages -->
 
   <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-    <form class="space-y-6" action="#" method="POST">
+    <form action="{{ url_for('register') }}" class="space-y-6" method="POST">
+      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
       <div>
         <label for="name" class="block text-sm/6 font-medium text-gray-900"
           >Full Name</label
@@ -84,7 +99,7 @@ block content %}
           type="submit"
           class="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm/6 font-semibold text-white shadow-xs hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
         >
-          Sign in
+          Register
         </button>
       </div>
     </form>
